@@ -32,11 +32,26 @@ app.get('/signUp', (req, res) => {
     res.sendFile(path.join(__dirname, 'Frontend', 'signUp', 'index.html'));
 });
 
+// Database health check endpoint
+app.get('/api/health', async (req, res) => {
+    if (!db) {
+        return res.status(503).json({ status: 'error', message: 'Database not connected' });
+    }
+    
+    try {
+        await db.query('SELECT 1');
+        return res.status(200).json({ status: 'ok', message: 'Database connected' });
+    } catch (error) {
+        console.error('Health check error:', error);
+        return res.status(503).json({ status: 'error', message: 'Database connection error' });
+    }
+});
 
-
-app.listen(3000, () => {
-    console.log("Server is running on port 3000");
-}); 
+// Start the server
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
 
 app.post('/api/login', async (req, res) => {
     try {

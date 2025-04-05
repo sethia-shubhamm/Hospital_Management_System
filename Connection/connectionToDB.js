@@ -3,20 +3,31 @@ import mysql from "mysql2";
 let db;
 
 try {
-    const initialConnection = mysql.createPool({
-        host: 'localhost',
-        user: 'root',
-        password: 'root',
-    });
-    initialConnection.query('CREATE DATABASE IF NOT EXISTS HOSPITAL_DB');
+    // Use environment variables with fallback to local development settings
+    const DB_HOST = process.env.DB_HOST || 'localhost';
+    const DB_USER = process.env.DB_USER || 'root';
+    const DB_PASSWORD = process.env.DB_PASSWORD || 'root';
+    const DB_NAME = process.env.DB_NAME || 'HOSPITAL_DB';
     
+    // For development: create database if it doesn't exist
+    if (!process.env.DB_HOST) {
+        const initialConnection = mysql.createPool({
+            host: DB_HOST,
+            user: DB_USER,
+            password: DB_PASSWORD,
+        });
+        initialConnection.query('CREATE DATABASE IF NOT EXISTS HOSPITAL_DB');
+    }
+    
+    // Create the connection pool
     db = mysql.createPool({
-        host: 'localhost',
-        user: 'root',
-        password: 'root',
-        database: 'HOSPITAL_DB'
+        host: DB_HOST,
+        user: DB_USER,
+        password: DB_PASSWORD,
+        database: DB_NAME
     });
     
+    // Create tables if they don't exist
     db.query(`
         CREATE TABLE IF NOT EXISTS LOGIN_DETAILS (
             EMAIL VARCHAR(255) NOT NULL UNIQUE,
@@ -40,8 +51,10 @@ try {
         ALTER TABLE PATIENT_DETAILS AUTO_INCREMENT = 1001
     `);
 
-}catch(error){
-    console.log(error);
+    console.log("Database connection successful");
+
+} catch(error) {
+    console.error("Database connection error:", error);
 }
 
 export default db ? db.promise() : null;
