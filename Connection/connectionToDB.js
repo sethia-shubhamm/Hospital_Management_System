@@ -8,10 +8,14 @@ try {
     if (process.env.DATABASE_URL) {
         // Connect using connection string
         console.log('Attempting to connect using DATABASE_URL');
+        console.log('Connection string: ' + process.env.DATABASE_URL.replace(/:[^:]*@/, ':****@')); // Log URL with hidden password
+        
         try {
             db = new Pool({
                 connectionString: process.env.DATABASE_URL,
-                ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
+                ssl: { rejectUnauthorized: false },
+                // Force IPv4
+                family: 4
             });
             
             // Test connection
@@ -56,6 +60,7 @@ try {
                     
                 } catch (err) {
                     console.error("❌ Database initialization error:", err.message);
+                    console.error("Error details:", err);
                     db = null;
                 }
             };
@@ -64,6 +69,7 @@ try {
             
         } catch (err) {
             console.error("❌ Database setup error:", err.message);
+            console.error("Error details:", err);
             db = null;
         }
     } else {
@@ -86,7 +92,9 @@ try {
                     password: DB_PASSWORD,
                     database: DB_NAME,
                     port: DB_PORT,
-                    ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
+                    ssl: { rejectUnauthorized: false },
+                    // Force IPv4
+                    family: 4
                 });
                 
                 // Test connection and create tables if they don't exist
@@ -132,6 +140,7 @@ try {
                         
                     } catch (err) {
                         console.error("❌ Database initialization error:", err.message);
+                        console.error("Error details:", err);
                         db = null;
                     }
                 };
@@ -140,6 +149,7 @@ try {
                 
             } catch (err) {
                 console.error("❌ Database setup error:", err.message);
+                console.error("Error details:", err);
                 db = null;
             }
         } else {
@@ -149,6 +159,7 @@ try {
     }
 } catch(error) {
     console.error("❌ Database setup error:", error.message);
+    console.error("Error details:", error);
     db = null;
 }
 
