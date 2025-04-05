@@ -282,96 +282,93 @@
 
 @media screen and (max-width: 1200px) {
     .mainContainer img {
-        width: 450px;
-        height: 450px;
+        max-width: 90%;
+        margin-right: 0;
     }
-
+    
     .loginForm {
-        width: 450px;
-        padding: 40px;
+        padding: 30px;
+        width: 90%;
+        max-width: 500px;
     }
-
+    
     .slider {
-        width: 300px;
+        width: 90%;
     }
 }
 
 @media screen and (max-width: 992px) {
     .navbar {
-        width: 95%;
-        padding: 0 30px;
+        padding: 15px 30px;
     }
-
+    
     .mainContainer {
         flex-direction: column;
-        padding: 20px;
-        height: auto;
-        gap: 60px;
+        align-items: center;
+        margin-top: 30px;
+        gap: 30px;
     }
-
+    
     .mainContainer img {
-        width: 350px;
-        height: 350px;
-        margin: 0;
+        width: 70%;
+        max-width: 350px;
+        margin-bottom: 0;
     }
-
+    
     .loginForm {
-        width: 100%;
+        width: 90%;
         max-width: 500px;
-        border-radius: 30px;
-        margin-bottom: 30px;
-        height: auto;
-        padding: 50px 30px;
+        margin: 0 auto;
+        padding: 30px 25px;
     }
-
+    
     .slider {
-        position: relative;
-        top: -75px;
-        margin-bottom: -50px;
+        width: 100%;
+        margin-top: 25px;
     }
 }
 
 @media screen and (max-width: 768px) {
     .navbar {
-        width: 100%;
-        padding: 0 20px;
-        border-radius: 0;
+        padding: 15px 20px;
+        justify-content: center;
     }
-
+    
     .nav {
         display: none;
     }
-
+    
     .inputFeilds {
         flex-direction: column;
-        gap: 30px;
+        gap: 20px;
     }
-
+    
     .right {
+        align-items: flex-start;
         width: 100%;
     }
-
+    
     .btn {
-        min-width: 100px;
-        padding: 8px 20px;
+        padding: 10px 20px;
     }
-
+    
     .mainContainer img {
-        width: 250px;
-        height: 250px;
+        width: 80%;
+        max-width: 300px;
     }
-
+    
     .loginForm {
-        padding: 40px 25px;
-    }
-
-    .loginForm h1 {
-        font-size: 28px;
-    }
-
-    .slider {
         width: 90%;
-        max-width: 280px;
+    }
+    
+    .loginForm h1 {
+        font-size: 24px;
+    }
+    
+    .slider {
+        width: 100%;
+        flex-direction: column;
+        gap: 10px;
     }
 }
 
@@ -379,25 +376,65 @@
     .logo h6 {
         font-size: 16px;
     }
-
+    
     .slider {
-        width: 90%;
-        margin: 0 auto;
+        flex-direction: row;
+        flex-wrap: wrap;
     }
-
+    
     .mainContainer img {
-        width: 200px;
-        height: 200px;
+        width: 90%;
+        max-width: 250px;
     }
-
+    
     .login {
-        margin-right: 0;
+        padding: 30px 15px;
     }
-
+    
     .btn {
-        min-width: 80px;
-        padding: 8px 15px;
-        font-size: 12px;
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+    
+    .loginForm h1 {
+        font-size: 22px;
+        margin-bottom: 15px;
+    }
+    
+    .inputFeilds input {
+        padding: 10px 15px;
+        margin-top: 5px;
+    }
+    
+    .right label {
+        font-size: 14px;
+    }
+    
+    #loginStatus {
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .loginForm {
+        padding: 20px 15px;
+    }
+    
+    .logo img {
+        height: 30px;
+    }
+    
+    .logo h6 {
+        font-size: 14px;
+    }
+    
+    .loginForm h1 {
+        font-size: 20px;
+    }
+    
+    .slider button {
+        padding: 8px 12px;
+        font-size: 13px;
     }
 }
 

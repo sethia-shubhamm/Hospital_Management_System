@@ -125,15 +125,15 @@ app.post('/api/login', dbMiddleware, async (req, res) => {
         
         // Only proceed with database query if we have a connection
         if (db) {
-            const [rows] = await db.query(
-                'SELECT * FROM LOGIN_DETAILS WHERE EMAIL = ? AND PASSWORD = ? AND USER_TYPE = ?',
+            const result = await db.query(
+                'SELECT * FROM LOGIN_DETAILS WHERE EMAIL = $1 AND PASSWORD = $2 AND USER_TYPE = $3',
                 [email, password, userType || 'patient']
             );
             
-            if (rows.length > 0) {
-                const user = rows[0];
+            if (result.rows.length > 0) {
+                const user = result.rows[0];
                 
-                delete user.PASSWORD;
+                delete user.password;
                 
                 return res.status(200).json({ 
                     message: 'Login successful',
@@ -174,39 +174,45 @@ app.post('/api/signUp', dbMiddleware, async (req, res) => {
         }
         
         // Check if email already exists
-        const [existingUser] = await db.query('SELECT * FROM LOGIN_DETAILS WHERE EMAIL = ?', [email]);
+        const existingUser = await db.query('SELECT * FROM LOGIN_DETAILS WHERE EMAIL = $1', [email]);
         
-        if (existingUser.length > 0) {
+        if (existingUser.rows.length > 0) {
             return res.status(409).json({ message: 'Email already registered' });
         }
         
-        // Start transaction to ensure both tables are updated
-        await db.query('START TRANSACTION');
+        // Start transaction
+        const client = await db.connect();
         
         try {
+            // Begin transaction
+            await client.query('BEGIN');
+            
             // Insert into LOGIN_DETAILS
-            await db.query(
-                'INSERT INTO LOGIN_DETAILS (EMAIL, PASSWORD, USER_TYPE) VALUES (?, ?, ?)',
+            await client.query(
+                'INSERT INTO LOGIN_DETAILS (EMAIL, PASSWORD, USER_TYPE) VALUES ($1, $2, $3)',
                 [email, password, 'patient']
             );
             
             // Insert into PATIENT_DETAILS
-            const [result] = await db.query(
-                'INSERT INTO PATIENT_DETAILS (NAME, AGE, GENDER, CONTACT, BLOOD_TYPE) VALUES (?, ?, ?, ?, ?)',
+            const result = await client.query(
+                'INSERT INTO PATIENT_DETAILS (NAME, AGE, GENDER, CONTACT, BLOOD_TYPE) VALUES ($1, $2, $3, $4, $5) RETURNING PATIENT_ID',
                 [name, age, gender, contact, bloodGroup]
             );
             
             // Commit transaction
-            await db.query('COMMIT');
+            await client.query('COMMIT');
             
             return res.status(201).json({ 
                 message: 'Registration successful',
-                patientId: result.insertId
+                patientId: result.rows[0].patient_id
             });
         } catch (error) {
             // Rollback on error
-            await db.query('ROLLBACK');
+            await client.query('ROLLBACK');
             throw error; // Re-throw to be caught by outer try-catch
+        } finally {
+            // Release the client back to the pool
+            client.release();
         }
     } catch (error) {
         console.error('Signup error:', error);

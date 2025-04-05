@@ -347,29 +347,85 @@ footer {
     color: rgba(255, 255, 255, 0.6);
 }
 
+/* Enhanced Responsive Styles */
+@media (max-width: 1200px) {
+    .container {
+        width: 100%;
+    }
+    
+    .services-grid {
+        gap: 20px;
+    }
+    
+    .login-options {
+        padding: 20px 15px;
+    }
+    
+    .stat-card h3 {
+        font-size: 28px;
+    }
+}
+
 @media (max-width: 992px) {
     .login-options {
-        flex-wrap: wrap;
-        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+    }
+    
+    .card {
+        width: 80%;
+        max-width: 400px;
     }
     
     .stats-section {
         flex-wrap: wrap;
+        gap: 20px;
+    }
+    
+    .stat-card {
+        width: 45%;
+    }
+    
+    .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .footer-content {
+        gap: 30px;
     }
 }
 
 @media (max-width: 768px) {
     .navbar {
         padding: 15px 20px;
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .logo {
+        justify-content: center;
     }
     
     .logo h1 {
         font-size: 20px;
     }
     
+    .nav-links {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    
     .nav-links a {
-        margin-left: 15px;
+        margin: 5px 10px;
         font-size: 14px;
+    }
+    
+    .hero-section {
+        padding: 60px 15px 40px;
     }
     
     .hero-section h1 {
@@ -380,40 +436,110 @@ footer {
         font-size: 16px;
     }
     
-    .login-options {
+    .stats-section {
         flex-direction: column;
         align-items: center;
     }
     
-    .card {
-        width: 100%;
-        max-width: 320px;
+    .stat-card {
+        width: 80%;
+    }
+    
+    .services-section {
+        padding: 40px 20px;
+    }
+    
+    .services-section h2 {
+        font-size: 28px;
+    }
+    
+    .footer-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    
+    .footer-section h3:after {
+        left: 50%;
+        transform: translateX(-50%);
     }
 }
 
 @media (max-width: 576px) {
     .navbar {
-        flex-direction: column;
-        gap: 15px;
-        text-align: center;
+        padding: 10px 15px;
+    }
+    
+    .logo img {
+        height: 30px;
+    }
+    
+    .logo h1 {
+        font-size: 18px;
     }
     
     .nav-links a {
-        margin: 0 10px;
+        margin: 5px;
+        font-size: 13px;
+    }
+    
+    .hero-section h1 {
+        font-size: 26px;
     }
     
     .stats-section {
-        padding: 30px 15px;
-        flex-direction: column;
-        gap: 20px;
+        margin: 30px auto;
+        padding: 20px 10px;
+    }
+    
+    .stat-card {
+        width: 100%;
+        padding: 15px;
+    }
+    
+    .services-grid {
+        grid-template-columns: 1fr;
     }
     
     .service-card {
-        padding: 30px 20px;
+        width: 100%;
     }
     
-    .footer-content {
-        gap: 30px;
+    .card {
+        width: 100%;
+        padding: 25px 15px;
+    }
+    
+    .buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .footer-bottom {
+        font-size: 12px;
+        padding: 15px 10px;
+    }
+}
+
+@media (max-width: 400px) {
+    .logo h1 {
+        font-size: 16px;
+    }
+    
+    .hero-section h1 {
+        font-size: 24px;
+    }
+    
+    .btn {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+    
+    .card h2 {
+        font-size: 20px;
+    }
+    
+    .card p {
+        font-size: 14px;
     }
 }
 
