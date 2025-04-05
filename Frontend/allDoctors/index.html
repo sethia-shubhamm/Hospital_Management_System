@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Doctors | Hospital Management System</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container-fluid p-0">
+        <!-- Navigation Bar -->
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container">
+                <a class="navbar-brand" href="../mainDashboard.html">
+                    <img src="../signUp/images/logo.png" alt="Hospital Logo" height="40">
+                    <span>Hospital Management System</span>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="../mainDashboard.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="index.html">All Doctors</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../bloodBank/index.html">Blood Bank</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Header Section -->
+        <header class="doctors-header text-center py-5">
+            <div class="container">
+                <h1>Our Medical Specialists</h1>
+                <p class="lead">Meet our experienced team of healthcare professionals dedicated to your wellbeing</p>
+            </div>
+        </header>
+
+        <!-- Filter Section -->
+        <section class="filter-section py-3">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <div class="card filter-card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3 mb-md-0">
+                                        <select class="form-select" id="specialtyFilter">
+                                            <option value="all" selected>All Specialties</option>
+                                            <option value="cardiology">Cardiology</option>
+                                            <option value="neurology">Neurology</option>
+                                            <option value="orthopedics">Orthopedics</option>
+                                            <option value="pediatrics">Pediatrics</option>
+                                            <option value="gynecology">Gynecology</option>
+                                            <option value="dermatology">Dermatology</option>
+                                            <option value="ophthalmology">Ophthalmology</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control" id="searchDoctor" placeholder="Search by name">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Doctors Grid Section -->
+        <section class="doctors-grid py-5">
+            <div class="container">
+                <div class="row g-4">
+                    <!-- Doctor Card 1 -->
+                    <div class="col-md-6 col-lg-4 col-xl-3" data-specialty="cardiology">
+                        <div class="doctor-card">
+                            <div class="doctor-image">
+                                <img src="images/doctor1.jpg" alt="Dr. Sarah Johnson">
+                            </div>
+                            <div class="doctor-info">
+                                <h3>Dr. Sarah Johnson</h3>
+                                <p class="specialty">Cardiology</p>
+                                <p class="description">Specializing in cardiovascular health with over 10 years of experience</p>
+                                <div class="doctor-contact">
+                                    <p><i class="bi bi-envelope"></i> sarah.johnson@hospital.com</p>
+                                    <p><i class="bi bi-telephone"></i> (123) 456-7890</p>
+                                </div>
+                                <button class="btn btn-primary book-btn">Book Appointment</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Doctor Card 2 -->
+                    <div class="col-md-6 col-lg-4 col-xl-3" data-specialty="neurology">
+                        <div class="doctor-card">
+                            <div class="doctor-image">
+                                <img src="images/doctor2.jpg" alt="Dr. Michael Chen">
+                            </div>
+                            <div class="doctor-info">
+                                <h3>Dr. Michael Chen</h3>
+                                <p class="specialty">Neurology</p>
+                                <p class="description">Expert in neurological disorders and treatments</p>
+                                <div class="doctor-contact">
+                                    <p><i class="bi bi-envelope"></i> michael.chen@hospital.com</p>
+                                    <p><i class="bi bi-telephone"></i> (123) 456-7891</p>
+                                </div>
+                                <button class="btn btn-primary book-btn">Book Appointment</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Doctor Card 3 -->
+                    <div class="col-md-6 col-lg-4 col-xl-3" data-specialty="pediatrics">
+                        <div class="doctor-card">
+                            <div class="doctor-image">
+                                <img src="images/doctor3.jpg" alt="Dr. Emily Patel">
+                            </div>
+                            <div class="doctor-info">
+                                <h3>Dr. Emily Patel</h3>
+                                <p class="specialty">Pediatrics</p>
+                                <p class="description">Dedicated to children's health and development</p>
+                                <div class="doctor-contact">
+                                    <p><i class="bi bi-envelope"></i> emily.patel@hospital.com</p>
+                                    <p><i class="bi bi-telephone"></i> (123) 456-7892</p>
+                                </div>
+                                <button class="btn btn-primary book-btn">Book Appointment</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Doctor Card 4 -->
+                    <div class="col-md-6 col-lg-4 col-xl-3" data-specialty="orthopedics">
+                        <div class="doctor-card">
+                            <div class="doctor-image">
+                                <img src="images/doctor4.jpg" alt="Dr. Robert Wilson">
+                            </div>
+                            <div class="doctor-info">
+                                <h3>Dr. Robert Wilson</h3>
+                                <p class="specialty">Orthopedics</p>
+                                <p class="description">Specializing in musculoskeletal conditions and sports medicine</p>
+                                <div class="doctor-contact">
+                                    <p><i class="bi bi-envelope"></i> robert.wilson@hospital.com</p>
+                                    <p><i class="bi bi-telephone"></i> (123) 456-7893</p>
+                                </div>
+                                <button class="btn btn-primary book-btn">Book Appointment</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Doctor Card 5 -->
+                    <div class="col-md-6 col-lg-4 col-xl-3" data-specialty="gynecology">
+                        <div class="doctor-card">
+                            <div class="doctor-image">
+                                <img src="images/doctor5.jpg" alt="Dr. Jessica Brown">
+                            </div>
+                            <div class="doctor-info">
+                                <h3>Dr. Jessica Brown</h3>
+                                <p class="specialty">Gynecology</p>
+                                <p class="description">Specialized care for women's health and reproductive issues</p>
+                                <div class="doctor-contact">
+                                    <p><i class="bi bi-envelope"></i> jessica.brown@hospital.com</p>
+                                    <p><i class="bi bi-telephone"></i> (123) 456-7894</p>
+                                </div>
+                                <button class="btn btn-primary book-btn">Book Appointment</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Doctor Card 6 -->
+                    <div class="col-md-6 col-lg-4 col-xl-3" data-specialty="dermatology">
+                        <div class="doctor-card">
+                            <div class="doctor-image">
+                                <img src="images/doctor6.jpg" alt="Dr. David Kim">
+                            </div>
+                            <div class="doctor-info">
+                                <h3>Dr. David Kim</h3>
+                                <p class="specialty">Dermatology</p>
+                                <p class="description">Expert in skin conditions, treatments, and cosmetic procedures</p>
+                                <div class="doctor-contact">
+                                    <p><i class="bi bi-envelope"></i> david.kim@hospital.com</p>
+                                    <p><i class="bi bi-telephone"></i> (123) 456-7895</p>
+                                </div>
+                                <button class="btn btn-primary book-btn">Book Appointment</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Doctor Card 7 -->
+                    <div class="col-md-6 col-lg-4 col-xl-3" data-specialty="ophthalmology">
+                        <div class="doctor-card">
+                            <div class="doctor-image">
+                                <img src="images/doctor7.jpg" alt="Dr. Maria Rodriguez">
+                            </div>
+                            <div class="doctor-info">
+                                <h3>Dr. Maria Rodriguez</h3>
+                                <p class="specialty">Ophthalmology</p>
+                                <p class="description">Specializing in eye care, vision correction, and ocular health</p>
+                                <div class="doctor-contact">
+                                    <p><i class="bi bi-envelope"></i> maria.rodriguez@hospital.com</p>
+                                    <p><i class="bi bi-telephone"></i> (123) 456-7896</p>
+                                </div>
+                                <button class="btn btn-primary book-btn">Book Appointment</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Doctor Card 8 -->
+                    <div class="col-md-6 col-lg-4 col-xl-3" data-specialty="cardiology">
+                        <div class="doctor-card">
+                            <div class="doctor-image">
+                                <img src="images/doctor8.jpg" alt="Dr. James Taylor">
+                            </div>
+                            <div class="doctor-info">
+                                <h3>Dr. James Taylor</h3>
+                                <p class="specialty">Cardiology</p>
+                                <p class="description">Specialist in cardiovascular intervention and preventive cardiology</p>
+                                <div class="doctor-contact">
+                                    <p><i class="bi bi-envelope"></i> james.taylor@hospital.com</p>
+                                    <p><i class="bi bi-telephone"></i> (123) 456-7897</p>
+                                </div>
+                                <button class="btn btn-primary book-btn">Book Appointment</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer py-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 mb-4 mb-md-0">
+                        <h5>Hospital Management System</h5>
+                        <p>Providing quality healthcare services and connecting patients with the best specialists.</p>
+                    </div>
+                    <div class="col-md-4 mb-4 mb-md-0">
+                        <h5>Quick Links</h5>
+                        <ul class="list-unstyled">
+                            <li><a href="../mainDashboard.html">Home</a></li>
+                            <li><a href="index.html">All Doctors</a></li>
+                            <li><a href="../bloodBank/index.html">Blood Bank</a></li>
+                            <li><a href="../mainDashboard.html#services">Services</a></li>
+                            <li><a href="../login/index.html">Patient Login</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+                        <h5>Contact</h5>
+                        <address>
+                            <p>📞 Emergency: 911</p>
+                            <p>📱 Helpline: +1 234 567 890</p>
+                            <p>📧 Email: info@hospital.com</p>
+                            <p>🏥 123 Healthcare Street, Medical City, MC 12345</p>
+                        </address>
+                    </div>
+                </div>
+                <hr>
+                <div class="text-center">
+                    <p>&copy; 2024 Hospital Management System. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Appointment Booking Modal -->
+    <div class="modal fade" id="appointmentModal" tabindex="-1" aria-labelledby="appointmentModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="appointmentModalLabel">Book Appointment</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="appointmentForm">
+                        <input type="hidden" id="doctorId" name="doctorId">
+                        <input type="hidden" id="doctorName" name="doctorName">
+                        <input type="hidden" id="doctorSpecialty" name="doctorSpecialty">
+                        
+                        <div class="mb-3">
+                            <label for="patientName" class="form-label">Your Name</label>
+                            <input type="text" class="form-control" id="patientName" name="patientName" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="patientEmail" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="patientEmail" name="patientEmail" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="patientPhone" class="form-label">Phone Number</label>
+                            <input type="tel" class="form-control" id="patientPhone" name="patientPhone" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="appointmentDate" class="form-label">Preferred Date</label>
+                            <input type="date" class="form-control" id="appointmentDate" name="appointmentDate" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="appointmentTime" class="form-label">Preferred Time</label>
+                            <select class="form-select" id="appointmentTime" name="appointmentTime" required>
+                                <option value="" selected disabled>Select Time</option>
+                                <option value="9:00 AM">9:00 AM</option>
+                                <option value="10:00 AM">10:00 AM</option>
+                                <option value="11:00 AM">11:00 AM</option>
+                                <option value="1:00 PM">1:00 PM</option>
+                                <option value="2:00 PM">2:00 PM</option>
+                                <option value="3:00 PM">3:00 PM</option>
+                                <option value="4:00 PM">4:00 PM</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="reason" class="form-label">Reason for Visit</label>
+                            <textarea class="form-control" id="reason" name="reason" rows="3" required></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="submitAppointment">Book Appointment</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal fade" id="successModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Appointment Booked!</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center">
+                        <i class="bi bi-check-circle-fill text-success" style="font-size: 3rem;"></i>
+                        <h4 class="mt-3">Appointment Confirmed</h4>
+                        <p>Your appointment has been successfully booked. You will receive a confirmation email with all details.</p>
+                        <div id="appointmentSummary" class="mt-4 text-start p-3 border rounded bg-light">
+                            <!-- Appointment details will be displayed here -->
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JS -->
+    <script src="script.js"></script>
+</body>
+</html> 

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctors Management | Hospital Management System</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <img src="/signUp/images/logo.png" alt="Hospital Logo" class="logo-img">
+                <h2>HMS Admin</h2>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <ul>
+                    <li>
+                        <a href="/adminPanel/dashboard/index.html">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="/adminPanel/doctors/index.html">
+                            <i class="fas fa-user-md"></i>
+                            <span>Doctors</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/adminPanel/patients/index.html">
+                            <i class="fas fa-users"></i>
+                            <span>Patients</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/adminPanel/appointments/index.html">
+                            <i class="fas fa-calendar-check"></i>
+                            <span>Appointments</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/adminPanel/reports/index.html">
+                            <i class="fas fa-chart-bar"></i>
+                            <span>Reports</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/adminPanel/settings/index.html">
+                            <i class="fas fa-cog"></i>
+                            <span>Settings</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <a href="/mainDashboard.html" class="logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="content-header">
+                <div class="header-left">
+                    <button class="menu-toggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1>Doctors Management</h1>
+                </div>
+                <div class="header-right">
+                    <div class="search-bar">
+                        <input type="text" placeholder="Search doctors...">
+                        <button><i class="fas fa-search"></i></button>
+                    </div>
+                    <div class="admin-profile">
+                        <img src="/adminLogin/images/Company.png" alt="Admin Profile">
+                        <div class="profile-info">
+                            <span class="name">Admin User</span>
+                            <span class="role">System Administrator</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            
+            <div class="dashboard-content">
+                <div class="content-header-actions">
+                    <h2>Manage Doctors</h2>
+                    <button class="btn-primary"><i class="fas fa-plus"></i> Add New Doctor</button>
+                </div>
+                
+                <div class="filters-bar">
+                    <div class="filter-group">
+                        <label>Department:</label>
+                        <select>
+                            <option value="">All Departments</option>
+                            <option>Cardiology</option>
+                            <option>Neurology</option>
+                            <option>Orthopedics</option>
+                            <option>Pediatrics</option>
+                            <option>Oncology</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Status:</label>
+                        <select>
+                            <option value="">All Status</option>
+                            <option>Active</option>
+                            <option>On Leave</option>
+                            <option>Inactive</option>
+                        </select>
+                    </div>
+                    <button class="btn-filter">Apply Filters</button>
+                </div>
+                
+                <div class="table-card doctors-table">
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <input type="checkbox" class="select-all">
+                                    </th>
+                                    <th>Name</th>
+                                    <th>Department</th>
+                                    <th>Specialization</th>
+                                    <th>Contact</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><input type="checkbox" class="select-row"></td>
+                                    <td>
+                                        <div class="user-info">
+                                            <div class="user-avatar">EC</div>
+                                            <div>
+                                                <span class="user-name">Dr. Emily Chen</span>
+                                                <span class="user-email">emily.chen@hospital.com</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>Cardiology</td>
+                                    <td>Heart Surgeon</td>
+                                    <td>+1 (555) 123-4567</td>
+                                    <td><span class="status available">Active</span></td>
+                                    <td class="actions">
+                                        <button class="action-btn edit"><i class="fas fa-edit"></i></button>
+                                        <button class="action-btn delete"><i class="fas fa-trash"></i></button>
+                                        <button class="action-btn view"><i class="fas fa-eye"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox" class="select-row"></td>
+                                    <td>
+                                        <div class="user-info">
+                                            <div class="user-avatar">DW</div>
+                                            <div>
+                                                <span class="user-name">Dr. David Wilson</span>
+                                                <span class="user-email">david.wilson@hospital.com</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>Neurology</td>
+                                    <td>Neurologist</td>
+                                    <td>+1 (555) 234-5678</td>
+                                    <td><span class="status busy">On Duty</span></td>
+                                    <td class="actions">
+                                        <button class="action-btn edit"><i class="fas fa-edit"></i></button>
+                                        <button class="action-btn delete"><i class="fas fa-trash"></i></button>
+                                        <button class="action-btn view"><i class="fas fa-eye"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox" class="select-row"></td>
+                                    <td>
+                                        <div class="user-info">
+                                            <div class="user-avatar">SM</div>
+                                            <div>
+                                                <span class="user-name">Dr. Sarah Miller</span>
+                                                <span class="user-email">sarah.miller@hospital.com</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>Pediatrics</td>
+                                    <td>Pediatrician</td>
+                                    <td>+1 (555) 345-6789</td>
+                                    <td><span class="status available">Active</span></td>
+                                    <td class="actions">
+                                        <button class="action-btn edit"><i class="fas fa-edit"></i></button>
+                                        <button class="action-btn delete"><i class="fas fa-trash"></i></button>
+                                        <button class="action-btn view"><i class="fas fa-eye"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox" class="select-row"></td>
+                                    <td>
+                                        <div class="user-info">
+                                            <div class="user-avatar">JT</div>
+                                            <div>
+                                                <span class="user-name">Dr. John Taylor</span>
+                                                <span class="user-email">john.taylor@hospital.com</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>Orthopedics</td>
+                                    <td>Orthopedic Surgeon</td>
+                                    <td>+1 (555) 456-7890</td>
+                                    <td><span class="status unavailable">On Leave</span></td>
+                                    <td class="actions">
+                                        <button class="action-btn edit"><i class="fas fa-edit"></i></button>
+                                        <button class="action-btn delete"><i class="fas fa-trash"></i></button>
+                                        <button class="action-btn view"><i class="fas fa-eye"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox" class="select-row"></td>
+                                    <td>
+                                        <div class="user-info">
+                                            <div class="user-avatar">RL</div>
+                                            <div>
+                                                <span class="user-name">Dr. Robert Lee</span>
+                                                <span class="user-email">robert.lee@hospital.com</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>Oncology</td>
+                                    <td>Oncologist</td>
+                                    <td>+1 (555) 567-8901</td>
+                                    <td><span class="status available">Active</span></td>
+                                    <td class="actions">
+                                        <button class="action-btn edit"><i class="fas fa-edit"></i></button>
+                                        <button class="action-btn delete"><i class="fas fa-trash"></i></button>
+                                        <button class="action-btn view"><i class="fas fa-eye"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="pagination">
+                        <button class="pagination-btn prev"><i class="fas fa-chevron-left"></i></button>
+                        <button class="pagination-btn active">1</button>
+                        <button class="pagination-btn">2</button>
+                        <button class="pagination-btn">3</button>
+                        <span class="pagination-ellipsis">...</span>
+                        <button class="pagination-btn">10</button>
+                        <button class="pagination-btn next"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>
+            </div>
+            
+            <footer class="content-footer">
+                <p>&copy; 2024 Hospital Management System. All rights reserved.</p>
+            </footer>
+        </main>
+    </div>
+    
+    <script src="../assets/js/dashboard.js"></script>
+</body>
+</html> 
