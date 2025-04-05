@@ -11,6 +11,29 @@ const app = express();
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'Frontend')));
 
+// Middleware to check for database and handle errors
+const dbMiddleware = async (req, res, next) => {
+    if (!db) {
+        return res.status(503).json({ 
+            status: 'error', 
+            message: 'Database service unavailable. Please try again later.' 
+        });
+    }
+    
+    try {
+        // Test the connection before proceeding
+        await db.query('SELECT 1');
+        next();
+    } catch (error) {
+        console.error('Database query error in middleware:', error);
+        return res.status(503).json({ 
+            status: 'error', 
+            message: 'Database service unavailable. Please try again later.' 
+        });
+    }
+};
+
+// Static routes that don't require database
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'Frontend', 'mainDashboard.html'));
 });
@@ -47,13 +70,8 @@ app.get('/api/health', async (req, res) => {
     }
 });
 
-// Start the server
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-});
-
-app.post('/api/login', async (req, res) => {
+// API routes that require database - use dbMiddleware
+app.post('/api/login', dbMiddleware, async (req, res) => {
     try {
         const { email, password, userType } = req.body;
 
@@ -61,7 +79,6 @@ app.post('/api/login', async (req, res) => {
             return res.status(400).json({ message: 'Email and password are required' });
         }
         
-    
         const [rows] = await db.query(
             'SELECT * FROM LOGIN_DETAILS WHERE EMAIL = ? AND PASSWORD = ? AND USER_TYPE = ?',
             [email, password, userType || 'patient']
@@ -85,7 +102,7 @@ app.post('/api/login', async (req, res) => {
     }
 });
 
-app.post('/api/signUp', async (req, res) => {
+app.post('/api/signUp', dbMiddleware, async (req, res) => {
     try {
         const { name, email, password, age, gender, contact, address, bloodGroup, confirmPassword } = req.body;
         
@@ -108,31 +125,47 @@ app.post('/api/signUp', async (req, res) => {
         // Start transaction to ensure both tables are updated
         await db.query('START TRANSACTION');
         
-        // Insert into LOGIN_DETAILS
-        await db.query(
-            'INSERT INTO LOGIN_DETAILS (EMAIL, PASSWORD, USER_TYPE) VALUES (?, ?, ?)',
-            [email, password, 'patient']
-        );
-        
-        // Insert into PATIENT_DETAILS
-        const [result] = await db.query(
-            'INSERT INTO PATIENT_DETAILS (NAME, AGE, GENDER, CONTACT, BLOOD_TYPE) VALUES (?, ?, ?, ?, ?)',
-            [name, age, gender, contact, bloodGroup]
-        );
-        
-        // Commit transaction
-        await db.query('COMMIT');
-        
-        return res.status(201).json({ 
-            message: 'Registration successful',
-            patientId: result.insertId
-        });
+        try {
+            // Insert into LOGIN_DETAILS
+            await db.query(
+                'INSERT INTO LOGIN_DETAILS (EMAIL, PASSWORD, USER_TYPE) VALUES (?, ?, ?)',
+                [email, password, 'patient']
+            );
+            
+            // Insert into PATIENT_DETAILS
+            const [result] = await db.query(
+                'INSERT INTO PATIENT_DETAILS (NAME, AGE, GENDER, CONTACT, BLOOD_TYPE) VALUES (?, ?, ?, ?, ?)',
+                [name, age, gender, contact, bloodGroup]
+            );
+            
+            // Commit transaction
+            await db.query('COMMIT');
+            
+            return res.status(201).json({ 
+                message: 'Registration successful',
+                patientId: result.insertId
+            });
+        } catch (error) {
+            // Rollback on error
+            await db.query('ROLLBACK');
+            throw error; // Re-throw to be caught by outer try-catch
+        }
     } catch (error) {
-        // Rollback on error
-        await db.query('ROLLBACK');
         console.error('Signup error:', error);
         return res.status(500).json({ message: 'Server error during registration' });
     }
+});
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+    console.error('Unhandled error:', err);
+    res.status(500).json({ message: 'Internal server error' });
+});
+
+// Start the server
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
 });
 
 
