@@ -14,9 +14,16 @@ app.use(express.static(path.join(__dirname, 'Frontend')));
 // Middleware to check for database and handle errors
 const dbMiddleware = async (req, res, next) => {
     if (!db) {
+        // Check if this is a demo login request
+        if (req.body && req.body.email === 'demo@hospital.com' && req.body.password === 'demo1234') {
+            // Allow demo login to pass through
+            req.isDemoUser = true;
+            return next();
+        }
+        
         return res.status(503).json({ 
             status: 'error', 
-            message: 'Database service unavailable. Please try again later.' 
+            message: 'Database service unavailable. Please try the demo account instead.' 
         });
     }
     
@@ -26,9 +33,17 @@ const dbMiddleware = async (req, res, next) => {
         next();
     } catch (error) {
         console.error('Database query error in middleware:', error);
+        
+        // Check if this is a demo login request
+        if (req.body && req.body.email === 'demo@hospital.com' && req.body.password === 'demo1234') {
+            // Allow demo login to pass through
+            req.isDemoUser = true;
+            return next();
+        }
+        
         return res.status(503).json({ 
             status: 'error', 
-            message: 'Database service unavailable. Please try again later.' 
+            message: 'Database service unavailable. Please try the demo account instead.' 
         });
     }
 };
@@ -58,7 +73,10 @@ app.get('/signUp', (req, res) => {
 // Database health check endpoint
 app.get('/api/health', async (req, res) => {
     if (!db) {
-        return res.status(503).json({ status: 'error', message: 'Database not connected' });
+        return res.status(503).json({ 
+            status: 'error', 
+            message: 'Database not connected. The application is running in static demo mode.' 
+        });
     }
     
     try {
@@ -66,9 +84,27 @@ app.get('/api/health', async (req, res) => {
         return res.status(200).json({ status: 'ok', message: 'Database connected' });
     } catch (error) {
         console.error('Health check error:', error);
-        return res.status(503).json({ status: 'error', message: 'Database connection error' });
+        return res.status(503).json({ 
+            status: 'error', 
+            message: 'Database connection error. The application is running in static demo mode.' 
+        });
     }
 });
+
+// Mock data for demo mode
+const DEMO_USER = {
+    EMAIL: 'demo@hospital.com',
+    USER_TYPE: 'patient'
+};
+
+const DEMO_PATIENT = {
+    PATIENT_ID: 1001,
+    NAME: 'Demo Patient',
+    AGE: 30,
+    GENDER: 'male',
+    CONTACT: '+1 (555) 123-4567',
+    BLOOD_TYPE: 'O+'
+};
 
 // API routes that require database - use dbMiddleware
 app.post('/api/login', dbMiddleware, async (req, res) => {
@@ -79,22 +115,35 @@ app.post('/api/login', dbMiddleware, async (req, res) => {
             return res.status(400).json({ message: 'Email and password are required' });
         }
         
-        const [rows] = await db.query(
-            'SELECT * FROM LOGIN_DETAILS WHERE EMAIL = ? AND PASSWORD = ? AND USER_TYPE = ?',
-            [email, password, userType || 'patient']
-        );
-        
-        if (rows.length > 0) {
-            const user = rows[0];
-            
-            delete user.PASSWORD;
-            
+        // Handle demo user
+        if (email === 'demo@hospital.com' && password === 'demo1234') {
             return res.status(200).json({ 
-                message: 'Login successful',
-                user: user
+                message: 'Demo login successful',
+                user: DEMO_USER
             });
+        }
+        
+        // Only proceed with database query if we have a connection
+        if (db) {
+            const [rows] = await db.query(
+                'SELECT * FROM LOGIN_DETAILS WHERE EMAIL = ? AND PASSWORD = ? AND USER_TYPE = ?',
+                [email, password, userType || 'patient']
+            );
+            
+            if (rows.length > 0) {
+                const user = rows[0];
+                
+                delete user.PASSWORD;
+                
+                return res.status(200).json({ 
+                    message: 'Login successful',
+                    user: user
+                });
+            } else {
+                return res.status(401).json({ message: 'Invalid email or password' });
+            }
         } else {
-            return res.status(401).json({ message: 'Invalid email or password' });
+            return res.status(401).json({ message: 'Invalid credentials. Try the demo account.' });
         }
     } catch (error) {
         console.error('Login error:', error);
@@ -113,6 +162,15 @@ app.post('/api/signUp', dbMiddleware, async (req, res) => {
         
         if (password !== confirmPassword) {
             return res.status(400).json({ message: 'Passwords do not match' });
+        }
+        
+        // If in demo mode, return a mock success response
+        if (!db) {
+            return res.status(200).json({
+                message: 'Demo registration successful! In production, this would create a real account.',
+                note: 'This is running in demo mode without a database connection.',
+                patientId: 9999
+            });
         }
         
         // Check if email already exists
